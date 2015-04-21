@@ -1,0 +1,43 @@
+{
+  "name": "pouchdb-hoodie-sync",
+  "description": "Hoodie-like sync API for PouchDB",
+  "version": "0.0.0",
+  "bugs": {
+    "url": "https://github.com/gr2m/pouchdb-hoodie-sync/issues"
+  },
+  "dependencies": {
+    "pouchdb-extend": "^0.1.2"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "memdown": "^1.0.0",
+    "pouchdb": "^3.3.0",
+    "standard": "^3.3.0",
+    "tap-spec": "^3.0.0",
+    "tape": "^4.0.0"
+  },
+  "homepage": "https://github.com/gr2m/pouchdb-hoodie-sync",
+  "keywords": [
+    "data",
+    "first",
+    "hoodie",
+    "offline",
+    "pouchdb",
+    "storage",
+    "sync"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gr2m/pouchdb-hoodie-sync.git"
+  },
+  "scripts": {
+    "test": "standard && npm run -s test:node | tap-spec",
+    "test:node": "node tests"
+  },
+  "standard": {
+    "ignore": [
+      "dist/**"
+    ]
+  }
+}
