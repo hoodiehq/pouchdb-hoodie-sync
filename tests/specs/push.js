@@ -71,13 +71,32 @@ test('api.push(objects)', function (t) {
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
   var obj3 = {_id: 'test3', foo1: 'bar3'}
-  // var pushobj = (obj1, obj2)
   db.bulkDocs([obj1, obj2, obj3])
 
   .then(function () {
     api.push([obj1, 'test2']) // array
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 2, '2 objects pushed')
+    })
+  })
+})
+
+test('api.push(object)', function (t) {
+  t.plan(1)
+  var db = dbFactory('hoodieDB5')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  var obj1 = {_id: 'test1', foo1: 'bar1'}
+  var obj2 = {_id: 'test2', foo1: 'bar2'}
+  var obj3 = {_id: 'test3', foo1: 'bar3'}
+  db.bulkDocs([obj1, obj2, obj3])
+
+  .then(function () {
+    api.push(obj1._id) // string
+    .then(function (obj) {
+      t.equal(obj.length, 1, '1 object pushed')
     })
   })
 })
