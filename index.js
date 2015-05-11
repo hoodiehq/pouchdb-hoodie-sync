@@ -5,7 +5,7 @@ var exports = module.exports = { hoodieSync: hoodieSync }
 function hoodieSync (options) {
   return {
     db: this,
-    pull: function () {},
+    pull: require('./lib/pull').bind(this, options),
     push: require('./lib/push').bind(this, options),
     sync: function () {},
     on: function () {}
