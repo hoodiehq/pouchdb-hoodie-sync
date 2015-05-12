@@ -35,7 +35,7 @@ test('api.pull() creates 2 db`s and puts data in first, second remains empty', f
 
 /* create if db does not exist, ping if exists or created */
 test('api.pull()', function (t) {
-  t.plan(1)
+  t.plan(2)
   var db3 = dbFactory('db3')
   var db4 = dbFactory('db4')
   var api = db3.hoodieSync({remote: 'db4'})
@@ -46,18 +46,19 @@ test('api.pull()', function (t) {
 
   .then(function () {
     api.pull() // empty
-    .then(function (obj) {
-      t.equal(obj.length, 2, '2 objects pulled')
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 2, '2 objects pulled')
+      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
     })
   })
 })
 
 /* create if db does not exist, ping if exists or created */
 test('api.pull(string)', function (t) {
-  t.plan(1)
-  var db3 = dbFactory('db3')
-  var db4 = dbFactory('db4')
-  var api = db3.hoodieSync({remote: 'db4'})
+  t.plan(2)
+  var db3 = dbFactory('db5')
+  var db4 = dbFactory('db6')
+  var api = db3.hoodieSync({remote: 'db6'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -65,18 +66,19 @@ test('api.pull(string)', function (t) {
 
   .then(function () {
     api.pull('test1') // string
-    .then(function (obj) {
-      t.equal(obj.length, 1, '1 object pulled')
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 1, '1 object pulled')
+      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
     })
   })
 })
 
 /* create if db does not exist, ping if exists or created */
 test('api.pull(objects)', function (t) {
-  t.plan(1)
-  var db3 = dbFactory('db3')
-  var db4 = dbFactory('db4')
-  var api = db3.hoodieSync({remote: 'db4'})
+  t.plan(3)
+  var db3 = dbFactory('db7')
+  var db4 = dbFactory('db8')
+  var api = db3.hoodieSync({remote: 'db8'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -85,18 +87,20 @@ test('api.pull(objects)', function (t) {
 
   .then(function () {
     api.pull([obj1, 'test2']) // objects
-    .then(function (obj) {
-      t.equal(obj.length, 2, '2 objects pulled')
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 2, '2 objects pulled')
+      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
+      t.equal(pulledObjects[1][0]._id, 'test2', 'pulledObjects[1][0]._id match')
     })
   })
 })
 
 /* create if db does not exist, ping if exists or created */
 test('api.pull(object)', function (t) {
-  t.plan(1)
-  var db3 = dbFactory('db3')
-  var db4 = dbFactory('db4')
-  var api = db3.hoodieSync({remote: 'db4'})
+  t.plan(2)
+  var db3 = dbFactory('db9')
+  var db4 = dbFactory('db10')
+  var api = db3.hoodieSync({remote: 'db10'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -105,8 +109,9 @@ test('api.pull(object)', function (t) {
 
   .then(function () {
     api.pull(obj3) // object
-    .then(function (obj) {
-      t.equal(obj.length, 1, '1 object pulled')
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 1, '1 object pulled')
+      t.equal(pulledObjects[0][0]._id, 'test3', 'pulledObjects[0][0]._id match')
     })
   })
 })
