@@ -25,7 +25,7 @@ test('api.push() creates new db', function (t) {
 })
 
 test('api.push()', function (t) {
-  t.plan(1)
+  t.plan(2)
   var db = dbFactory('hoodieDB2')
   var PouchDB = db.constructor
   var remoteName = PouchDB.utils.uuid(10)
@@ -35,14 +35,15 @@ test('api.push()', function (t) {
 
   .then(function () {
     api.push() // leer
-    .then(function (obj) {
-      t.equal(obj.length, 1, 'no param: pushed obj length is 1')
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 1, 'pushedObjects length is 1')
+      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
     })
   })
 })
 
 test('api.push(string)', function (t) {
-  t.plan(1)
+  t.plan(2)
   var db = dbFactory('hoodieDB3')
   var PouchDB = db.constructor
   var remoteName = PouchDB.utils.uuid(10)
@@ -55,14 +56,15 @@ test('api.push(string)', function (t) {
 
   .then(function () {
     api.push('test1') // string
-    .then(function (obj) {
-      t.equal(obj.length, 1, '1 object pushed')
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 1, '1 object pushed')
+      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
     })
   })
 })
 
 test('api.push(objects)', function (t) {
-  t.plan(1)
+  t.plan(3)
   var db = dbFactory('hoodieDB4')
   var PouchDB = db.constructor
   var remoteName = PouchDB.utils.uuid(10)
@@ -77,12 +79,14 @@ test('api.push(objects)', function (t) {
     api.push([obj1, 'test2']) // array
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 2, '2 objects pushed')
+      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
+      t.equal(pushedObjects[1][0]._id, 'test2', 'pushedObjects[1][0]._id match')
     })
   })
 })
 
 test('api.push(object)', function (t) {
-  t.plan(1)
+  t.plan(2)
   var db = dbFactory('hoodieDB5')
   var PouchDB = db.constructor
   var remoteName = PouchDB.utils.uuid(10)
@@ -95,8 +99,9 @@ test('api.push(object)', function (t) {
 
   .then(function () {
     api.push(obj1) // object
-    .then(function (obj) {
-      t.equal(obj.length, 1, '1 object pushed')
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 1, '1 object pushed')
+      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
     })
   })
 })
