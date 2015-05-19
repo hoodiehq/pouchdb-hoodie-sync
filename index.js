@@ -7,7 +7,7 @@ function hoodieSync (options) {
     db: this,
     pull: require('./lib/pull').bind(this, options),
     push: require('./lib/push').bind(this, options),
-    sync: function () {},
+    sync: require('./lib/sync').bind(this, options),
     on: function () {}
   }
 }
