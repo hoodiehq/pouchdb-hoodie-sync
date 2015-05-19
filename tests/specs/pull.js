@@ -33,7 +33,6 @@ test('api.pull() creates 2 db`s and puts data in first, second remains empty', f
   })
 })
 
-/* create if db does not exist, ping if exists or created */
 test('api.pull()', function (t) {
   t.plan(2)
   var db3 = dbFactory('db3')
@@ -48,12 +47,11 @@ test('api.pull()', function (t) {
     api.pull() // empty
     .then(function (pulledObjects) {
       t.equal(pulledObjects.length, 2, '2 objects pulled')
-      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
+      t.equal(pulledObjects[0]._id, 'test1', 'pulledObjects[0]._id match')
     })
   })
 })
 
-/* create if db does not exist, ping if exists or created */
 test('api.pull(string)', function (t) {
   t.plan(2)
   var db3 = dbFactory('db5')
@@ -68,12 +66,11 @@ test('api.pull(string)', function (t) {
     api.pull('test1') // string
     .then(function (pulledObjects) {
       t.equal(pulledObjects.length, 1, '1 object pulled')
-      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
+      t.equal(pulledObjects[0]._id, 'test1', 'pulledObjects[0]._id match')
     })
   })
 })
 
-/* create if db does not exist, ping if exists or created */
 test('api.pull(objects)', function (t) {
   t.plan(3)
   var db3 = dbFactory('db7')
@@ -89,13 +86,16 @@ test('api.pull(objects)', function (t) {
     api.pull([obj1, 'test2']) // objects
     .then(function (pulledObjects) {
       t.equal(pulledObjects.length, 2, '2 objects pulled')
-      t.equal(pulledObjects[0][0]._id, 'test1', 'pulledObjects[0][0]._id match')
-      t.equal(pulledObjects[1][0]._id, 'test2', 'pulledObjects[1][0]._id match')
+      var ids = [
+                  pulledObjects[0]._id,
+                  pulledObjects[1]._id
+                ].sort()
+      t.equal(ids[0], 'test1', 'pulledObjects[0]._id match')
+      t.equal(ids[1], 'test2', 'pulledObjects[1]._id match')
     })
   })
 })
 
-/* create if db does not exist, ping if exists or created */
 test('api.pull(object)', function (t) {
   t.plan(2)
   var db3 = dbFactory('db9')
@@ -111,7 +111,27 @@ test('api.pull(object)', function (t) {
     api.pull(obj3) // object
     .then(function (pulledObjects) {
       t.equal(pulledObjects.length, 1, '1 object pulled')
-      t.equal(pulledObjects[0][0]._id, 'test3', 'pulledObjects[0][0]._id match')
+      t.equal(pulledObjects[0]._id, 'test3', 'pulledObjects[0]._id match')
+    })
+  })
+})
+
+test('api.pull("inexistentID")', function (t) {
+  t.plan(1)
+  var db = dbFactory('db11')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  var obj1 = {_id: 'test1', foo1: 'bar1'}
+  var obj2 = {_id: 'test2', foo1: 'bar2'}
+
+  db.bulkDocs([obj1, obj2])
+
+  .then(function () {
+    api.push('inexistentID') // string
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 0, '0 objects pushed')
     })
   })
 })
