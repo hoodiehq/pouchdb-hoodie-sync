@@ -37,7 +37,7 @@ test('api.push()', function (t) {
     api.push() // leer
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 1, 'pushedObjects length is 1')
-      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
+      t.equal(pushedObjects[0]._id, 'test1', 'pushedObjects[0]._id match')
     })
   })
 })
@@ -58,7 +58,7 @@ test('api.push(string)', function (t) {
     api.push('test1') // string
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 1, '1 object pushed')
-      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
+      t.equal(pushedObjects[0]._id, 'test1', 'pushedObjects[0]._id match')
     })
   })
 })
@@ -79,8 +79,12 @@ test('api.push(objects)', function (t) {
     api.push([obj1, 'test2']) // array
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 2, '2 objects pushed')
-      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
-      t.equal(pushedObjects[1][0]._id, 'test2', 'pushedObjects[1][0]._id match')
+      var ids = [
+                  pushedObjects[0]._id,
+                  pushedObjects[1]._id
+                ].sort()
+      t.equal(ids[0], 'test1', 'pushedObjects[0]._id match')
+      t.equal(ids[1], 'test2', 'pushedObjects[1]._id match')
     })
   })
 })
@@ -101,7 +105,27 @@ test('api.push(object)', function (t) {
     api.push(obj1) // object
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 1, '1 object pushed')
-      t.equal(pushedObjects[0][0]._id, 'test1', 'pushedObjects[0][0]._id match')
+      t.equal(pushedObjects[0]._id, 'test1', 'pushedObjects[0]._id match')
+    })
+  })
+})
+
+test('api.push("inexistentID")', function (t) {
+  t.plan(1)
+  var db = dbFactory('hoodieDB6')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  var obj1 = {_id: 'test1', foo1: 'bar1'}
+  var obj2 = {_id: 'test2', foo1: 'bar2'}
+
+  db.bulkDocs([obj1, obj2])
+
+  .then(function () {
+    api.push('inexistentID') // string
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 0, '0 objects pushed')
     })
   })
 })
