@@ -129,3 +129,24 @@ test('api.push("inexistentID")', function (t) {
     })
   })
 })
+
+test('api.push() when local / remote in sync', function (t) {
+  t.plan(2)
+  var db = dbFactory('hoodieDB7')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  db.put({_id: 'test1', foo1: 'bar1'})
+
+  .then(function () {
+    api.push()
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 1, 'pushedObjects length is 1')
+      return api.push()
+    })
+    .then(function (pushedObjects) {
+      t.equal(pushedObjects.length, 0, 'pushedObjects length is 0')
+    })
+  })
+})
