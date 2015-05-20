@@ -223,3 +223,52 @@ test('api.sync("inexistentID")', function (t) {
     })
   })
 })
+
+test('api.sync(), when local / remote in sync', function (t) {
+  t.plan(8)
+  var db13 = dbFactory('syncDB13')
+  var db14 = dbFactory('syncDB14')
+  var api = db13.hoodieSync({remote: 'syncDB14'})
+
+  var remoteObj1 = {_id: 'test1', foo1: 'bar1'}
+  var remoteObj2 = {_id: 'test2', foo1: 'bar2'}
+  db13.bulkDocs([remoteObj1, remoteObj2])
+
+  var localObj1 = {_id: 'test3', foo1: 'bar3'}
+  var localObj2 = {_id: 'test4', foo1: 'bar4'}
+  db14.bulkDocs([localObj1, localObj2])
+
+  .then(function () {
+    api.sync()
+    .then(function (syncedObjects) {
+      t.equal(syncedObjects.length, 4, '4 objects synced to db13 / db14')
+      var ids = [
+          syncedObjects[0]._id,
+          syncedObjects[1]._id,
+          syncedObjects[2]._id,
+          syncedObjects[3]._id
+        ].sort()
+
+      t.equal(ids[0], 'test1', 'syncedObjects[0]._id match')
+      t.equal(ids[1], 'test2', 'syncedObjects[1]._id match')
+      t.equal(ids[2], 'test3', 'syncedObjects[2]._id match')
+      t.equal(ids[3], 'test4', 'syncedObjects[3]._id match')
+      return api.sync()
+    })
+    .then(function (syncedObjects) {
+      t.equal(syncedObjects.length, 0, '0 object synced')
+    })
+    .then(function () {
+      return db13.info()
+    })
+    .then(function (info) {
+      t.equal(info.doc_count, 4, '4 docs in db13')
+    })
+    .then(function () {
+      return db14.info()
+    })
+    .then(function (info) {
+      t.equal(info.doc_count, 4, '4 docs in db14')
+    })
+  })
+})
