@@ -129,9 +129,30 @@ test('api.pull("inexistentID")', function (t) {
   db.bulkDocs([obj1, obj2])
 
   .then(function () {
-    api.push('inexistentID') // string
+    api.pull('inexistentID') // string
     .then(function (pulledObjects) {
-      t.equal(pulledObjects.length, 0, '0 objects pushed')
+      t.equal(pulledObjects.length, 0, '0 objects pulled')
+    })
+  })
+})
+
+test('api.pull() when local / remote in sync', function (t) {
+  t.plan(2)
+  var db = dbFactory('db12')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  db.put({_id: 'test1', foo1: 'bar1'})
+
+  .then(function () {
+    api.pull()
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 1, 'pulledObjects length is 1')
+      return api.pull()
+    })
+    .then(function (pulledObjects) {
+      t.equal(pulledObjects.length, 0, 'pulledObjects length is 0')
     })
   })
 })
