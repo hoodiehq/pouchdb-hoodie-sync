@@ -4,8 +4,8 @@ var dbFactory = require('../utils/db')
 /* create if db does not exist, ping if exists or created */
 test('api.pull() creates 2 db`s and puts data in first, second remains empty', function (t) {
   t.plan(2)
-  var db1 = dbFactory('db1')
-  var db2 = dbFactory('db2')
+  var db1 = dbFactory('pullDB1')
+  var db2 = dbFactory('pullDB2')
   var PouchDB = db1.constructor
   var remoteName = PouchDB.utils.uuid(10)
   var api = db1.hoodieSync({remote: remoteName})
@@ -21,7 +21,7 @@ test('api.pull() creates 2 db`s and puts data in first, second remains empty', f
   })
 
   .then(function (info) {
-    t.equal(info.db_name, 'db2', 'remote db2 exists ')
+    t.equal(info.db_name, 'pullDB2', 'remote db2 exists ')
   })
 
   .then(function () {
@@ -35,9 +35,9 @@ test('api.pull() creates 2 db`s and puts data in first, second remains empty', f
 
 test('api.pull()', function (t) {
   t.plan(2)
-  var db3 = dbFactory('db3')
-  var db4 = dbFactory('db4')
-  var api = db3.hoodieSync({remote: 'db4'})
+  var db3 = dbFactory('pullDB3')
+  var db4 = dbFactory('pullDB4')
+  var api = db3.hoodieSync({remote: 'pullDB4'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -54,9 +54,9 @@ test('api.pull()', function (t) {
 
 test('api.pull(string)', function (t) {
   t.plan(2)
-  var db3 = dbFactory('db5')
-  var db4 = dbFactory('db6')
-  var api = db3.hoodieSync({remote: 'db6'})
+  var db3 = dbFactory('pullDB5')
+  var db4 = dbFactory('pullDB6')
+  var api = db3.hoodieSync({remote: 'pullDB6'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -73,9 +73,9 @@ test('api.pull(string)', function (t) {
 
 test('api.pull(objects)', function (t) {
   t.plan(3)
-  var db3 = dbFactory('db7')
-  var db4 = dbFactory('db8')
-  var api = db3.hoodieSync({remote: 'db8'})
+  var db3 = dbFactory('pullDB7')
+  var db4 = dbFactory('pullDB8')
+  var api = db3.hoodieSync({remote: 'pullDB8'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -98,9 +98,9 @@ test('api.pull(objects)', function (t) {
 
 test('api.pull(object)', function (t) {
   t.plan(2)
-  var db3 = dbFactory('db9')
-  var db4 = dbFactory('db10')
-  var api = db3.hoodieSync({remote: 'db10'})
+  var db3 = dbFactory('pullDB9')
+  var db4 = dbFactory('pullDB10')
+  var api = db3.hoodieSync({remote: 'pullDB10'})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
@@ -118,15 +118,15 @@ test('api.pull(object)', function (t) {
 
 test('api.pull("inexistentID")', function (t) {
   t.plan(1)
-  var db = dbFactory('db11')
-  var PouchDB = db.constructor
+  var db11 = dbFactory('pullDB11')
+  var PouchDB = db11.constructor
   var remoteName = PouchDB.utils.uuid(10)
-  var api = db.hoodieSync({remote: remoteName})
+  var api = db11.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
-
-  db.bulkDocs([obj1, obj2])
+  var obj3 = {_id: 'test3', foo1: 'bar3'}
+  db11.bulkDocs([obj1, obj2, obj3])
 
   .then(function () {
     api.pull('inexistentID') // string
@@ -138,12 +138,11 @@ test('api.pull("inexistentID")', function (t) {
 
 test('api.pull() when local / remote in sync', function (t) {
   t.plan(2)
-  var db = dbFactory('db12')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
-  var api = db.hoodieSync({remote: remoteName})
+  var db13 = dbFactory('pullDB13')
+  var db14 = dbFactory('pullDB14')
+  var api = db13.hoodieSync({remote: 'pullDB14'})
 
-  db.put({_id: 'test1', foo1: 'bar1'})
+  db14.put({_id: 'test1', foo1: 'bar1'})
 
   .then(function () {
     api.pull()
