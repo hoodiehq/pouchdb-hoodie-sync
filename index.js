@@ -9,6 +9,7 @@ function hoodieSync (options) {
     pull: require('./lib/pull').bind(this, state, options),
     push: require('./lib/push').bind(this, state, options),
     sync: require('./lib/sync').bind(this, state, options),
+    connect: require('./lib/connect').bind(this, state, options),
     on: function () {}
   }
 }
