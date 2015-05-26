@@ -11,6 +11,7 @@ function hoodieSync (options) {
     sync: require('./lib/sync').bind(this, state, options),
     connect: require('./lib/connect').bind(this, state, options),
     disconnect: require('./lib/disconnect').bind(this, state, options),
+    isConnected: require('./lib/is-connected').bind(this, state, options),
     on: function () {}
   }
 }
