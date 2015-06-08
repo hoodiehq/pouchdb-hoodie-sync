@@ -17,6 +17,7 @@ var api = db.hoodieSync({
 // starts / stops continuous replication
 api.connect()
 api.disconnect()
+api.isConnected()
 
 // resolve with pulled docs[]
 api.pull()
@@ -33,6 +34,8 @@ api.sync([doc1, id2])
 // events
 api.on('pull', function(doc) {})
 api.on('push', function(doc) {})
+api.on('connect', function(doc) {})
+api.on('disconnect', function(doc) {})
 ```
 
 ### In the browser
