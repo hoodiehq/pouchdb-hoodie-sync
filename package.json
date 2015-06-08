@@ -10,9 +10,10 @@
   },
   "devDependencies": {
     "browserify": "^9.0.8",
+    "doxx": "1.2.1",
     "memdown": "^1.0.0",
     "pouchdb": "^3.3.0",
-    "standard": "^3.11.1",
+    "standard": "^3.7.3",
     "tap-spec": "^3.0.0",
     "tape": "^4.0.0"
   },
@@ -32,6 +33,7 @@
     "url": "https://github.com/gr2m/pouchdb-hoodie-sync.git"
   },
   "scripts": {
+    "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,dist,helpers,node_modules,tests,utils,index.js",
     "test": "standard && npm run -s test:node | tap-spec",
     "test:node": "node tests"
   },
