@@ -1,0 +1,35 @@
+language: node_js
+node_js:
+- '0.12'
+sudo: false
+cache:
+  directories:
+  - node_modules
+notifications:
+  email: false
+before_install:
+- nvm install $NODE
+- nvm use $NODE
+before_script:
+- npm prune
+- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+script: npm run $COMMAND
+after_success:
+- python travis_after_all.py
+- export $(cat .to_export_back)
+after_failure:
+- python travis_after_all.py
+- export $(cat .to_export_back)
+before_deploy:
+- rm -f travis_after_all.py .to_export_back
+- npm run docs
+after_deploy:
+- npm run deploydocs
+after_script:
+- echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
+env:
+  matrix:
+  - NODE=0.10 COMMAND=test:coverage
+  - NODE=0.10 COMMAND=test
+  - NODE=0.12 COMMAND=test
+  - NODE=iojs-v1 COMMAND=test
