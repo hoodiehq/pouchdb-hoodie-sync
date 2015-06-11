@@ -155,3 +155,27 @@ test('api.pull() when local / remote in sync', function (t) {
     })
   })
 })
+
+test('api.pull(reject)', function (t) {
+  t.plan(2)
+  var db15 = dbFactory('pullDB15')
+  var db16 = dbFactory('pullDB16')
+  var api = db15.hoodieSync({remote: 'pullDB16'})
+
+  db16.put({_id: 'test1', foo1: 'bar1'})
+
+  .then(function () {
+    return api.pull({})
+  })
+
+  .catch(function (error) {
+    t.pass(error.message)
+  })
+  .then(function () {
+    return api.pull([1, 2, undefined])
+  })
+  .catch(function () {
+    t.pass('One object within the array is undefined')
+  })
+})
+

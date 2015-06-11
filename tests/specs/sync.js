@@ -272,3 +272,32 @@ test('api.sync(), when local / remote in sync', function (t) {
     })
   })
 })
+
+test('api.sync(reject)', function (t) {
+  t.plan(2)
+  var db15 = dbFactory('syncDB15')
+  var db16 = dbFactory('syncDB16')
+  var api = db15.hoodieSync({remote: 'syncDB16'})
+
+  var remoteObj1 = {_id: 'test1', foo1: 'bar1'}
+  var remoteObj2 = {_id: 'test2', foo1: 'bar2'}
+  db15.bulkDocs([remoteObj1, remoteObj2])
+
+  var localObj1 = {_id: 'test3', foo1: 'bar3'}
+  var localObj2 = {_id: 'test4', foo1: 'bar4'}
+  db16.bulkDocs([localObj1, localObj2])
+
+  .then(function () {
+    return api.sync({})
+  })
+  .catch(function (error) {
+    t.pass(error.message)
+  })
+
+  .then(function () {
+    return api.sync([1, 2, undefined])
+  })
+  .catch(function () {
+    t.pass('One object within the array is undefined')
+  })
+})
