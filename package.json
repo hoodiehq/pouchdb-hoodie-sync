@@ -11,6 +11,8 @@
   "devDependencies": {
     "browserify": "^9.0.8",
     "doxx": "1.2.1",
+    "istanbul": "^0.3.5",
+    "istanbul-coveralls": "^1.0.1",
     "memdown": "^1.0.0",
     "pouchdb": "^3.3.0",
     "standard": "^3.7.3",
@@ -35,6 +37,7 @@
   "scripts": {
     "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,dist,helpers,node_modules,tests,utils,index.js",
     "test": "standard && npm run -s test:node | tap-spec",
+    "test:coverage": "istanbul cover tests && istanbul-coveralls",
     "test:node": "node tests"
   },
   "standard": {
