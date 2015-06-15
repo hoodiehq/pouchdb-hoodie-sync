@@ -13,10 +13,14 @@ before_install:
 before_script:
 - npm prune
 - curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
+# See https://github.com/boennemann/semantic-release/issues/18
+before_deploy:
+- npm config set spin false --global
 script: npm run $COMMAND
 after_success:
 - python travis_after_all.py
 - export $(cat .to_export_back)
+- if [[ $BUILD_LEADER = YES ]]; then npm run coveralls; fi
 after_failure:
 - python travis_after_all.py
 - export $(cat .to_export_back)
@@ -33,3 +37,18 @@ env:
   - NODE=0.10 COMMAND=test
   - NODE=0.12 COMMAND=test
   - NODE=iojs-v1 COMMAND=test
+deploy:
+  provider: npm
+  email: o.gasidlo@gmail.com
+  # Very important. Don't forget this one.
+  skip_cleanup: true
+  # Travis currently only supports the old auth key format.
+  # Do `echo -n "<username>:<password>" | base64` to get it.
+  # You should encrypt this:
+  # `travis encrypt $(echo -n "<username>:<password>" | base64) --add deploy.api_key`
+  api_key: 
+   - secure: fMznEMFySZD1m9kiRMXcRqMJ699uofmTwDS2fzj/lxZYurhx4jqRRRRhs1xnf+LTYIy5enInI7zZxGkr6Wey6GS9j7KGG6stoJREVy3FOKgC3OlfzkApxRUcQijwMbrISvlVmrMWhL5gZSJaebTFAko3LVjmC2IY5QM+H8ucOiM=
+  on:
+    branch: master
+    repo: hoodiehq/pouchdb-hoodie-sync
+    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
