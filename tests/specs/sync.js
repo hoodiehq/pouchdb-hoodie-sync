@@ -301,3 +301,43 @@ test('api.sync(reject)', function (t) {
     t.pass('One object within the array is undefined')
   })
 })
+
+test('api.sync(error)', function (t) {
+  t.plan(1)
+  var db17 = dbFactory('syncDB17')
+  var db18 = dbFactory('syncDB18')
+  var api = db17.hoodieSync({remote: 'syncDB18'})
+
+  var first = true
+  var data = {
+    get _id () {
+      if (first) {
+        first = false
+        return 'test1'
+      } else {
+        return {}
+      }
+    },
+    foo: 'bar'
+  }
+
+  var remoteObj1 = {_id: 'test1', foo1: 'bar1'}
+  var remoteObj2 = {_id: 'test2', foo1: 'bar2'}
+  db17.bulkDocs([remoteObj1, remoteObj2, data])
+
+  var localObj1 = {_id: 'test3', foo1: 'bar3'}
+  var localObj2 = {_id: 'test4', foo1: 'bar4'}
+  db18.bulkDocs([localObj1, localObj2])
+
+  .then(function () {
+    return api.sync(data)
+  })
+  .then(
+    function (resolve) {
+      t.pass('The error event was not fired!')
+    },
+    function (reject) {
+      t.pass('The error event was fired!')
+    }
+  )
+})

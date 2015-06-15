@@ -177,3 +177,39 @@ test('api.push({}) rejects', function (t) {
     t.pass('One object within the array is undefined')
   })
 })
+
+test('api.push() error', function (t) {
+  t.plan(1)
+  var db = dbFactory('hoodieDB8')
+  var PouchDB = db.constructor
+  var remoteName = PouchDB.utils.uuid(10)
+  var api = db.hoodieSync({remote: remoteName})
+
+  var obj1 = {_id: 'test1', foo1: 'bar1'}
+
+  var first = true
+  var data = {
+    get _id () {
+      if (first) {
+        first = false
+        return 'test1'
+      } else {
+        return {}
+      }
+    },
+    foo: 'bar'
+  }
+
+  db.bulkDocs([data, obj1])
+  .then(function () {
+    return api.push(data)
+  })
+  .then(
+    function (resolve) {
+      t.pass('The error event was not fired!')
+    },
+    function (reject) {
+      t.pass('The error event was fired!')
+    }
+  )
+})

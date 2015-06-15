@@ -178,3 +178,38 @@ test('api.pull(reject)', function (t) {
     t.pass('One object within the array is undefined')
   })
 })
+
+test('api.push() error', function (t) {
+  t.plan(1)
+  var db17 = dbFactory('pullDB17')
+  var db18 = dbFactory('pullDB18')
+  var api = db17.hoodieSync({remote: 'pullDB18'})
+
+  var obj1 = {_id: 'test1', foo1: 'bar1'}
+
+  var first = true
+  var data = {
+    get _id () {
+      if (first) {
+        first = false
+        return 'test1'
+      } else {
+        return {}
+      }
+    },
+    foo: 'bar'
+  }
+
+  db18.bulkDocs([data, obj1])
+  .then(function () {
+    return api.pull(data)
+  })
+  .then(
+    function (resolve) {
+      t.pass('The error event was not fired!')
+    },
+    function (reject) {
+      t.pass('The error event was fired!')
+    }
+  )
+})
