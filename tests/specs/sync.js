@@ -323,21 +323,21 @@ test('api.sync(error)', function (t) {
 
   var remoteObj1 = {_id: 'test1', foo1: 'bar1'}
   var remoteObj2 = {_id: 'test2', foo1: 'bar2'}
-  db17.bulkDocs([remoteObj1, remoteObj2, data])
 
   var localObj1 = {_id: 'test3', foo1: 'bar3'}
   var localObj2 = {_id: 'test4', foo1: 'bar4'}
-  db18.bulkDocs([localObj1, localObj2])
+
+  db17.bulkDocs([remoteObj1, remoteObj2, data])
+
+  .then(function () {
+    return db18.bulkDocs([localObj1, localObj2])
+  })
 
   .then(function () {
     return api.sync(data)
   })
-  .then(
-    function (resolve) {
-      t.pass('The error event was not fired!')
-    },
-    function (reject) {
-      t.pass('The error event was fired!')
-    }
-  )
+
+  .catch(function () {
+    t.pass('The error event was fired!')
+  })
 })

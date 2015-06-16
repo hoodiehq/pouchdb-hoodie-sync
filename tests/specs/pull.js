@@ -204,12 +204,7 @@ test('api.push() error', function (t) {
   .then(function () {
     return api.pull(data)
   })
-  .then(
-    function (resolve) {
-      t.pass('The error event was not fired!')
-    },
-    function (reject) {
-      t.pass('The error event was fired!')
-    }
-  )
+  .catch(function () {
+    t.pass('The error event was fired!')
+  })
 })
