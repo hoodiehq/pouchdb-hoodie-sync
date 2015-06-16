@@ -2,6 +2,8 @@
 
 > Hoodie-like sync API for PouchDB
 
+[![NPM](https://nodei.co/npm/pouchdb-hoodie-sync.png)](https://npmjs.org/package/pouchdb-hoodie-sync)
+
 [![Build Status](https://travis-ci.org/hoodiehq/pouchdb-hoodie-sync.svg?branch=master)](https://travis-ci.org/hoodiehq/pouchdb-hoodie-sync)
 [![Coverage Status](https://coveralls.io/repos/hoodiehq/pouchdb-hoodie-sync/badge.svg?branch=master)](https://coveralls.io/r/hoodiehq/pouchdb-hoodie-sync?branch=master)
 [![Dependency Status](https://david-dm.org/hoodiehq/pouchdb-hoodie-sync.svg)](https://david-dm.org/hoodiehq/pouchdb-hoodie-sync)
