@@ -9,22 +9,22 @@
     "pouchdb-extend": "^0.1.2"
   },
   "devDependencies": {
-    "browserify": "^9.0.8",
-    "doxx": "1.2.1",
+    "browserify": "^10.2.4",
+    "doxx": "1.4.0",
     "gh-pages-deploy": "^0.3.0",
-    "istanbul": "^0.3.5",
-    "istanbul-coveralls": "^1.0.1",
+    "istanbul": "^0.3.15",
+    "istanbul-coveralls": "^1.0.3",
     "memdown": "^1.0.0",
-    "pouchdb": "^3.3.0",
+    "pouchdb": "^3.6.0",
     "semantic-release": "^3.4.0",
     "standard": "^4.2.1",
-    "tap-spec": "^3.0.0",
+    "tap-spec": "^4.0.0",
     "tape": "^4.0.0"
   },
   "gh-pages-deploy": {
-     "staticpath": "docs/build",
-     "noprompt": true
-   },
+    "staticpath": "docs/build",
+    "noprompt": true
+  },
   "homepage": "https://github.com/hoodiehq/pouchdb-hoodie-sync",
   "keywords": [
     "data",
