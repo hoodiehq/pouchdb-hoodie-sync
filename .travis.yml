@@ -47,7 +47,7 @@ deploy:
   # You should encrypt this:
   # `travis encrypt $(echo -n "<username>:<password>" | base64) --add deploy.api_key`
   api_key: 
-   - secure: fMznEMFySZD1m9kiRMXcRqMJ699uofmTwDS2fzj/lxZYurhx4jqRRRRhs1xnf+LTYIy5enInI7zZxGkr6Wey6GS9j7KGG6stoJREVy3FOKgC3OlfzkApxRUcQijwMbrISvlVmrMWhL5gZSJaebTFAko3LVjmC2IY5QM+H8ucOiM=
+   - secure: "k/LacVOeEJj95iXTb8PgJgybCZIBMh9WYS6JS/O2JFVDeon6dgsVG89mZSzXEfgl5xRCBlrR5CA6e+NsMdL9qiJmLT9xZBs+mOvVqSQ5KIDgrOxlQALhyr0e10XIeCrkrj0vvSjPJyl5IUAECCwLftgIsGnkRRPynsD09Is9fSw="
   on:
     branch: master
     repo: hoodiehq/pouchdb-hoodie-sync
