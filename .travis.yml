@@ -27,6 +27,7 @@ after_failure:
 before_deploy:
 - rm -f travis_after_all.py .to_export_back
 - npm run docs
+- npm config set spin false --global
 after_deploy:
 - npm run deploydocs
 after_script:
@@ -46,7 +47,7 @@ deploy:
   # Do `echo -n "<username>:<password>" | base64` to get it.
   # You should encrypt this:
   # `travis encrypt $(echo -n "<username>:<password>" | base64) --add deploy.api_key`
-  api_key: 
+  api_key:
    - secure: "k/LacVOeEJj95iXTb8PgJgybCZIBMh9WYS6JS/O2JFVDeon6dgsVG89mZSzXEfgl5xRCBlrR5CA6e+NsMdL9qiJmLT9xZBs+mOvVqSQ5KIDgrOxlQALhyr0e10XIeCrkrj0vvSjPJyl5IUAECCwLftgIsGnkRRPynsD09Is9fSw="
   on:
     branch: master
