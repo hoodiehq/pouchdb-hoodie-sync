@@ -42,7 +42,7 @@
   },
   "scripts": {
     "deploydocs": "gh-pages-deploy",
-    "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,dist,helpers,node_modules,tests,utils,index.js",
+    "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,bin,dist,helpers,node_modules,tests,utils,index.js",
     "test": "standard && npm run -s test:node | tap-spec",
     "test:coverage": "istanbul cover tests && istanbul-coveralls",
     "test:node": "node tests",
