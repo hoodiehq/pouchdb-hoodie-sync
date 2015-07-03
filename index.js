@@ -5,7 +5,7 @@ var EventEmitter = require('events').EventEmitter
 
 function hoodieSync (options) {
   var state = {
-    emitter: new EventEmitter()
+    emitter: options && options.emitter || new EventEmitter()
   }
 
   return {
