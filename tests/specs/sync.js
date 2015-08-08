@@ -341,3 +341,21 @@ test('api.sync(error)', function (t) {
     t.pass('The error event was fired!')
   })
 })
+
+test('api.sync()', function (t) {
+  t.plan(1)
+
+  var db19 = dbFactory('syncDB19')
+  var db20 = dbFactory('syncDB20')
+  var api = db19.hoodieSync({remote: 'syncDB20'})
+
+  db20.put({_id: 'test1', foo1: 'bar1'})
+
+  .then(function () {
+    return api.sync({id: 'test1'})
+  })
+
+  .then(function (syncedObjects) {
+    t.equal(syncedObjects.length, 1, 'object with .id synced successfully')
+  })
+})
