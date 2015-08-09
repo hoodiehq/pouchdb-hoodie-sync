@@ -8,7 +8,7 @@ function hoodieSync (options) {
     emitter: options && options.emitter || new EventEmitter()
   }
 
-  return {
+  state.api = {
     db: this,
     pull: require('./lib/pull').bind(this, state, options),
     push: require('./lib/push').bind(this, state, options),
@@ -20,6 +20,8 @@ function hoodieSync (options) {
     off: require('./lib/off').bind(this, state, options),
     one: require('./lib/one').bind(this, state, options)
   }
+
+  return state.api
 }
 
 /* istanbul ignore next */
