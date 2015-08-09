@@ -91,18 +91,19 @@ test('api.off("push"), 2 handlers, removing all', function (t) {
   var api = db.hoodieSync({remote: remoteName})
 
   var pushEvents1 = []
-  api.on('push', pushHandler1)
+  var pushEvents2 = []
+
+  api
+    .on('push', pushHandler1)
+    .on('push', pushHandler2)
+    .off('push')
+
   function pushHandler1 (doc) {
     pushEvents1.push(doc)
   }
-
-  var pushEvents2 = []
-  api.on('push', pushHandler2)
   function pushHandler2 (doc) {
     pushEvents2.push(doc)
   }
-
-  api.off('push')
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
   var obj2 = {_id: 'test2', foo1: 'bar2'}
