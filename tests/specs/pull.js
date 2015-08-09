@@ -87,9 +87,9 @@ test('api.pull(objects)', function (t) {
     .then(function (pulledObjects) {
       t.equal(pulledObjects.length, 2, '2 objects pulled')
       var ids = [
-                  pulledObjects[0]._id,
-                  pulledObjects[1]._id
-                ].sort()
+        pulledObjects[0]._id,
+        pulledObjects[1]._id
+      ].sort()
       t.equal(ids[0], 'test1', 'pulledObjects[0]._id match')
       t.equal(ids[1], 'test2', 'pulledObjects[1]._id match')
     })

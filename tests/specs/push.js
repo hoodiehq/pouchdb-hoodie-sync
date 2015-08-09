@@ -80,9 +80,9 @@ test('api.push(objects)', function (t) {
     .then(function (pushedObjects) {
       t.equal(pushedObjects.length, 2, '2 objects pushed')
       var ids = [
-                  pushedObjects[0]._id,
-                  pushedObjects[1]._id
-                ].sort()
+        pushedObjects[0]._id,
+        pushedObjects[1]._id
+      ].sort()
       t.equal(ids[0], 'test1', 'pushedObjects[0]._id match')
       t.equal(ids[1], 'test2', 'pushedObjects[1]._id match')
     })
