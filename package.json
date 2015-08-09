@@ -9,17 +9,17 @@
     "pouchdb-extend": "^0.1.2"
   },
   "devDependencies": {
-    "browserify": "^10.2.4",
-    "doxx": "1.4.0",
+    "browserify": "^11.0.1",
+    "doxx": "1.5.0",
     "gh-pages-deploy": "^0.3.0",
-    "istanbul": "^0.3.15",
+    "istanbul": "^0.3.17",
     "istanbul-coveralls": "^1.0.3",
     "memdown": "^1.0.0",
-    "pouchdb": "^3.6.0",
+    "pouchdb": "^4.0.0",
     "semantic-release": "3.3.2",
-    "standard": "^4.2.1",
-    "tap-spec": "^4.0.0",
-    "tape": "^4.0.0"
+    "standard": "^5.0.2",
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.3"
   },
   "gh-pages-deploy": {
     "staticpath": "docs/build",
