@@ -41,3 +41,33 @@ test('api.one("push")', function (t) {
     t.is(pushEvents.length, 1, 'triggers no second push event')
   })
 })
+
+test('api.one("push") chained', function (t) {
+  t.plan(4)
+
+  var db = dbFactory('onePushChained')
+  var remoteName = 'onePushChained-remote'
+  var api = db.hoodieSync({remote: remoteName})
+
+  var pushEvents = []
+  var pushEvents2 = []
+  api
+    .one('push', pushEvents.push.bind(pushEvents))
+    .one('push', pushEvents2.push.bind(pushEvents2))
+
+  var obj1 = {_id: 'test1', foo: 'bar1'}
+  var obj2 = {_id: 'test2', foo: 'bar2'}
+
+  db.bulkDocs([obj1, obj2])
+
+  .then(function () {
+    return api.push()
+  })
+
+  .then(function () {
+    t.is(pushEvents.length, 1, 'triggers 1 push event')
+    t.is(pushEvents[0].foo, 'bar1', 'event passes object')
+    t.is(pushEvents2.length, 1, 'triggers 1 push event')
+    t.is(pushEvents2[0].foo, 'bar1', 'event passes object')
+  })
+})

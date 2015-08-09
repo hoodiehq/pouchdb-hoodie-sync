@@ -112,10 +112,10 @@ test('api.on("pull") / api.on("push") for api.sync()', function (t) {
   var Promise = db1.constructor.utils.Promise
 
   var pushEvents = []
-  api.on('push', pushEvents.push.bind(pushEvents))
-
   var pullEvents = []
-  api.on('pull', pullEvents.push.bind(pullEvents))
+  api
+    .on('push', pushEvents.push.bind(pushEvents))
+    .on('pull', pullEvents.push.bind(pullEvents))
 
   var localObj1 = {_id: 'test3', foo1: 'bar3'}
   var localObj2 = {_id: 'test4', foo1: 'bar4'}
