@@ -1,55 +1,18 @@
-language: node_js
-node_js:
-- '0.12'
 sudo: false
+language: node_js
 cache:
   directories:
-  - node_modules
+    - node_modules
 notifications:
   email: false
+node_js:
+  - iojs
 before_install:
-- nvm install $NODE
-- nvm use $NODE
+  - npm i -g npm@^2.0.0
 before_script:
-- npm prune
-- curl -Lo travis_after_all.py https://raw.github.com/dmakhno/travis_after_all/master/travis_after_all.py
-# See https://github.com/boennemann/semantic-release/issues/18
-before_deploy:
-- npm config set spin false --global
-script: npm run $COMMAND
+  - npm prune
 after_success:
-- python travis_after_all.py
-- export $(cat .to_export_back)
-- if [[ $BUILD_LEADER = YES ]]; then npm run coveralls; fi
-after_failure:
-- python travis_after_all.py
-- export $(cat .to_export_back)
-before_deploy:
-- rm -f travis_after_all.py .to_export_back
-- npm run docs
-- npm config set spin false --global
-after_deploy:
-- npm run deploydocs
-after_script:
-- echo leader=$BUILD_LEADER status=$BUILD_AGGREGATE_STATUS
-env:
-  matrix:
-  - NODE=0.10 COMMAND=test:coverage
-  - NODE=0.10 COMMAND=test
-  - NODE=0.12 COMMAND=test
-  - NODE=iojs-v1 COMMAND=test
-deploy:
-  provider: npm
-  email: o.gasidlo@gmail.com
-  # Very important. Don't forget this one.
-  skip_cleanup: true
-  # Travis currently only supports the old auth key format.
-  # Do `echo -n "<username>:<password>" | base64` to get it.
-  # You should encrypt this:
-  # `travis encrypt $(echo -n "<username>:<password>" | base64) --add deploy.api_key`
-  api_key:
-   - secure: "k/LacVOeEJj95iXTb8PgJgybCZIBMh9WYS6JS/O2JFVDeon6dgsVG89mZSzXEfgl5xRCBlrR5CA6e+NsMdL9qiJmLT9xZBs+mOvVqSQ5KIDgrOxlQALhyr0e10XIeCrkrj0vvSjPJyl5IUAECCwLftgIsGnkRRPynsD09Is9fSw="
-  on:
-    branch: master
-    repo: hoodiehq/pouchdb-hoodie-sync
-    condition: "$BUILD_LEADER$BUILD_AGGREGATE_STATUS = YESothers_succeeded"
+  - npm run semantic-release
+  - npm run deploydocs
+  - npm run test:coverage
+  - npm run test:coverage:upload
