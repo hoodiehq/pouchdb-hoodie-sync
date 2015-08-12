@@ -46,9 +46,7 @@
     "test": "standard && npm run -s test:node | tap-spec",
     "test:coverage": "istanbul cover tests && istanbul-coveralls",
     "test:node": "node tests",
-    "predeploydocs": "./bin/authorize-push.js",
-    "prepublish": "semantic-release pre",
-    "postpublish": "semantic-release post"
+    "predeploydocs": "./bin/authorize-push.js"
   },
   "standard": {
     "ignore": [
