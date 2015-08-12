@@ -42,8 +42,8 @@ api.sync([doc1, id2])
 // events
 api.on('pull', function(doc) {})
 api.on('push', function(doc) {})
-api.on('connect', function(doc) {})
-api.on('disconnect', function(doc) {})
+api.on('connect', function() {})
+api.on('disconnect', function() {})
 ```
 
 ### In the browser
