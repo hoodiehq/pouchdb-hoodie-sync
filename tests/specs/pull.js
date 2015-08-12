@@ -1,13 +1,13 @@
 var test = require('tape')
 var dbFactory = require('../utils/db')
+var uniqueName = require('../utils/unique-name.js')
 
 /* create if db does not exist, ping if exists or created */
 test('api.pull() creates 2 db`s and puts data in first, second remains empty', function (t) {
   t.plan(2)
   var db1 = dbFactory('pullDB1')
   var db2 = dbFactory('pullDB2')
-  var PouchDB = db1.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-pull')
   var api = db1.hoodieSync({remote: remoteName})
 
   db1.put({_id: 'test'})
@@ -119,8 +119,7 @@ test('api.pull(object)', function (t) {
 test('api.pull("inexistentID")', function (t) {
   t.plan(1)
   var db11 = dbFactory('pullDB11')
-  var PouchDB = db11.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-pull')
   var api = db11.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
