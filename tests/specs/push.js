@@ -1,12 +1,12 @@
 var test = require('tape')
 var dbFactory = require('../utils/db')
+var uniqueName = require('../utils/unique-name.js')
 
 /* create if db does not exist, ping if exists or created */
 test('api.push() creates new db', function (t) {
   t.plan(1)
   var db = dbFactory()
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   db.put({_id: 'test'})
@@ -27,8 +27,7 @@ test('api.push() creates new db', function (t) {
 test('api.push()', function (t) {
   t.plan(2)
   var db = dbFactory('hoodieDB2')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   db.put({_id: 'test1', foo1: 'bar1'})
@@ -45,8 +44,7 @@ test('api.push()', function (t) {
 test('api.push(string)', function (t) {
   t.plan(2)
   var db = dbFactory('hoodieDB3')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
@@ -66,8 +64,7 @@ test('api.push(string)', function (t) {
 test('api.push(objects)', function (t) {
   t.plan(3)
   var db = dbFactory('hoodieDB4')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
@@ -92,8 +89,7 @@ test('api.push(objects)', function (t) {
 test('api.push(object)', function (t) {
   t.plan(2)
   var db = dbFactory('hoodieDB5')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
@@ -113,8 +109,7 @@ test('api.push(object)', function (t) {
 test('api.push("inexistentID")', function (t) {
   t.plan(1)
   var db = dbFactory('hoodieDB6')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
@@ -133,8 +128,7 @@ test('api.push("inexistentID")', function (t) {
 test('api.push() when local / remote in sync', function (t) {
   t.plan(2)
   var db = dbFactory('hoodieDB7')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   db.put({_id: 'test1', foo1: 'bar1'})
@@ -154,8 +148,7 @@ test('api.push() when local / remote in sync', function (t) {
 test('api.push({}) rejects', function (t) {
   t.plan(2)
   var db = dbFactory('hoodieDB8')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
@@ -181,8 +174,7 @@ test('api.push({}) rejects', function (t) {
 test('api.push() error', function (t) {
   t.plan(1)
   var db = dbFactory('hoodieDB8')
-  var PouchDB = db.constructor
-  var remoteName = PouchDB.utils.uuid(10)
+  var remoteName = uniqueName('remote-push')
   var api = db.hoodieSync({remote: remoteName})
 
   var obj1 = {_id: 'test1', foo1: 'bar1'}
