@@ -243,11 +243,11 @@ test('api.sync(), when local / remote in sync', function (t) {
     .then(function (syncedObjects) {
       t.equal(syncedObjects.length, 4, '4 objects synced to db13 / db14')
       var ids = [
-          syncedObjects[0]._id,
-          syncedObjects[1]._id,
-          syncedObjects[2]._id,
-          syncedObjects[3]._id
-        ].sort()
+        syncedObjects[0]._id,
+        syncedObjects[1]._id,
+        syncedObjects[2]._id,
+        syncedObjects[3]._id
+      ].sort()
 
       t.equal(ids[0], 'test1', 'syncedObjects[0]._id match')
       t.equal(ids[1], 'test2', 'syncedObjects[1]._id match')
