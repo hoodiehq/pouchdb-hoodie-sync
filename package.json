@@ -1,5 +1,6 @@
 {
   "name": "pouchdb-hoodie-sync",
+  "version": "0.0.0-placeholder",
   "description": "Hoodie-like sync API for PouchDB",
   "bugs": {
     "url": "https://github.com/hoodiehq/pouchdb-hoodie-sync/issues"
