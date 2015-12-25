@@ -5,6 +5,7 @@
     "url": "https://github.com/hoodiehq/pouchdb-hoodie-sync/issues"
   },
   "dependencies": {
+    "lie": "^3.0.1",
     "pouchdb-extend": "^0.1.2"
   },
   "devDependencies": {
