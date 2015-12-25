@@ -23,7 +23,13 @@ var api = db.hoodieSync({
   remote: 'http://example.com/mydb',
   // pass own EventEmitter instance if you want,
   // otherwise creates its own
-  emitter: emitter
+  emitter: emitter,
+  // optional ajax options for sync with remote db
+  ajax: {
+    headers: {
+      authorization: 'Bearer token123'
+    }
+  }
 })
 
 // starts / stops continuous replication
@@ -42,6 +48,13 @@ api.push([doc1, id2])
 // resolve with synced docs[]
 api.sync()
 api.sync([doc1, id2])
+
+// change remoteName
+api.changeRemote(newRemote)
+api.changeRemote({
+  remote: 'http://example.com/mydb'
+  ajax: ajaxOptions
+})
 
 // events
 api.on('pull', function(doc) {})
