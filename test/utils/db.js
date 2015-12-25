@@ -1,5 +1,3 @@
-'use strict'
-
 var uniqueName = require('./unique-name.js')
 
 var PouchDB = require('pouchdb').defaults({

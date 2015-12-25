@@ -5,7 +5,7 @@ var dbFactory = require('../utils/db')
 test('api.off()', function (t) {
   t.plan(1)
   var db = dbFactory()
-  var api = db.hoodieSync()
+  var api = db.hoodieSync({remote: 'remote'})
   t.is(typeof api.off, 'function', 'has method')
 })
 

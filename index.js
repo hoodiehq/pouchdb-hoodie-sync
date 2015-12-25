@@ -1,24 +1,21 @@
-'use strict'
+module.exports = { hoodieSync: hoodieSync }
 
-var exports = module.exports = { hoodieSync: hoodieSync }
-var EventEmitter = require('events').EventEmitter
+var getState = require('./lib/utils/get-state')
 
 function hoodieSync (options) {
-  var state = {
-    emitter: options && options.emitter || new EventEmitter()
-  }
+  var state = getState(this, options)
 
   state.api = {
     db: this,
-    pull: require('./lib/pull').bind(this, state, options),
-    push: require('./lib/push').bind(this, state, options),
-    sync: require('./lib/sync').bind(this, state, options),
-    connect: require('./lib/connect').bind(this, state, options),
-    disconnect: require('./lib/disconnect').bind(this, state, options),
-    isConnected: require('./lib/is-connected').bind(this, state, options),
-    on: require('./lib/on').bind(this, state, options),
-    off: require('./lib/off').bind(this, state, options),
-    one: require('./lib/one').bind(this, state, options)
+    pull: require('./lib/pull').bind(null, state),
+    push: require('./lib/push').bind(null, state),
+    sync: require('./lib/sync').bind(null, state),
+    connect: require('./lib/connect').bind(null, state),
+    disconnect: require('./lib/disconnect').bind(null, state),
+    isConnected: require('./lib/is-connected').bind(null, state),
+    on: require('./lib/on').bind(null, state),
+    off: require('./lib/off').bind(null, state),
+    one: require('./lib/one').bind(null, state)
   }
 
   return state.api
@@ -26,5 +23,5 @@ function hoodieSync (options) {
 
 /* istanbul ignore next */
 if (typeof window !== 'undefined' && window.PouchDB) {
-  window.PouchDB.plugin(exports)
+  window.PouchDB.plugin(module.exports)
 }

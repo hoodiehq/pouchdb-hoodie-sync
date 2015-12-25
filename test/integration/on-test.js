@@ -5,7 +5,7 @@ var waitFor = require('../utils/wait-for')
 test('api.on()', function (t) {
   t.plan(1)
   var db = dbFactory()
-  var api = db.hoodieSync()
+  var api = db.hoodieSync({remote: 'remote'})
   t.is(typeof api.on, 'function', 'has method')
 })
 

@@ -15,10 +15,10 @@
     "istanbul-coveralls": "^1.0.3",
     "memdown": "^1.0.0",
     "pouchdb": "^5.1.0",
+    "semantic-release": "^4.3.4",
     "standard": "^5.1.0",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.0",
-    "semantic-release": "^4.3.4"
+    "tape": "^4.2.0"
   },
   "gh-pages-deploy": {
     "staticpath": "docs/build",
@@ -42,10 +42,11 @@
   "scripts": {
     "deploydocs": "gh-pages-deploy",
     "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,bin,dist,helpers,node_modules,tests,utils,index.js",
-    "test": "standard && npm run -s test:node | tap-spec",
+    "pretest": "standard",
+    "test": "npm run -s test:node | tap-spec",
     "test:coverage": "istanbul cover tests",
     "test:coverage:upload": "istanbul-coveralls",
-    "test:node": "node tests",
+    "test:node": "tape test/{unit,integration}/*-test.js",
     "predeploydocs": "./bin/authorize-push.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
