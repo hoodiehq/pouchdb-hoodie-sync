@@ -44,7 +44,7 @@
     "docs": "doxx --source ./lib --target docs/build --template docs/template.jade --ignore coverage,bin,dist,helpers,node_modules,tests,utils,index.js",
     "pretest": "standard",
     "test": "npm run -s test:node | tap-spec",
-    "test:coverage": "istanbul cover tests",
+    "test:coverage": "istanbul cover tape test/{unit,integration}/*-test.js",
     "test:coverage:upload": "istanbul-coveralls",
     "test:node": "tape test/{unit,integration}/*-test.js",
     "predeploydocs": "./bin/authorize-push.js",
