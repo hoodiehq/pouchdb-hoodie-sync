@@ -25,6 +25,8 @@ var api = db.hoodieSync({
   // otherwise creates its own
   emitter: emitter,
   // optional ajax options for sync with remote db
+  // can also be a function. In that case the Function
+  // gets executed and result passed to all replications
   ajax: {
     headers: {
       authorization: 'Bearer token123'
