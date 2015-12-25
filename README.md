@@ -19,7 +19,11 @@ keep two databases in sync.
 // Initialisation
 var db = new PouchDB('dbname')
 var api = db.hoodieSync({
-  remote: 'http://example.com/mydb'
+  // local dbname or remote URL
+  remote: 'http://example.com/mydb',
+  // pass own EventEmitter instance if you want,
+  // otherwise creates its own
+  emitter: emitter
 })
 
 // starts / stops continuous replication
@@ -74,6 +78,12 @@ To run only the tests
 
 ```
 npm run test:node
+```
+
+Run tests from single file
+
+```
+node test/unit/connect-test.js
 ```
 
 ## Contributing
