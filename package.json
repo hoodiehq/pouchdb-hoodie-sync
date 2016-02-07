@@ -49,6 +49,7 @@
     "test:coverage": "istanbul cover tape test/{unit,integration}/*-test.js",
     "test:coverage:upload": "istanbul-coveralls",
     "test:node": "tape test/{unit,integration}/*-test.js",
+    "test:watch": "gaze 'clear && npm run -s test:node' index.js test/**/*.js lib/**/*.js",
     "predeploydocs": "./bin/authorize-push.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
