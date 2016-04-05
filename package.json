@@ -5,22 +5,22 @@
     "url": "https://github.com/hoodiehq/pouchdb-hoodie-sync/issues"
   },
   "dependencies": {
-    "lie": "^3.0.1",
+    "lie": "^3.0.2",
     "pouchdb-extend": "^0.1.2"
   },
   "devDependencies": {
     "browserify": "^13.0.0",
     "doxx": "2.1.1",
-    "gh-pages-deploy": "^0.4.0",
-    "istanbul": "^0.4.0",
+    "gh-pages-deploy": "^0.4.2",
+    "istanbul": "^0.4.2",
     "istanbul-coveralls": "^1.0.3",
-    "memdown": "^1.0.0",
-    "pouchdb": "^5.1.0",
+    "memdown": "^1.1.2",
+    "pouchdb": "^5.3.1",
     "semantic-release": "^4.3.4",
-    "simple-mock": "^0.6.0",
-    "standard": "^6.0.4",
+    "simple-mock": "^0.7.0",
+    "standard": "^6.0.8",
     "tap-spec": "^4.1.0",
-    "tape": "^4.2.0"
+    "tape": "^4.5.1"
   },
   "gh-pages-deploy": {
     "staticpath": "docs/build",
