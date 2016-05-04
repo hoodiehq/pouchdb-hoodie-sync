@@ -12,7 +12,7 @@
     "browserify": "^13.0.0",
     "doxx": "2.1.1",
     "gh-pages-deploy": "^0.4.2",
-    "istanbul": "^0.4.2",
+    "istanbul": "^0.4.3",
     "istanbul-coveralls": "^1.0.3",
     "memdown": "^1.1.2",
     "pouchdb": "^5.3.1",
