@@ -1,4 +1,6 @@
 var test = require('tape')
+var Promise = require('lie')
+
 var dbFactory = require('../utils/db')
 var waitFor = require('../utils/wait-for')
 
@@ -109,7 +111,6 @@ test('api.on("pull") / api.on("push") for api.sync()', function (t) {
   var db1 = dbFactory('on-5')
   var db2 = dbFactory('on-5-remote')
   var api = db1.hoodieSync({remote: 'on-5-remote'})
-  var Promise = db1.constructor.utils.Promise
 
   var pushEvents = []
   var pullEvents = []
