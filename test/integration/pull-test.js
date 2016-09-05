@@ -178,7 +178,7 @@ test('api.pull(reject)', function (t) {
   })
 })
 
-test('api.push() error', function (t) {
+test('api.pull() error', function (t) {
   t.plan(1)
   var db17 = dbFactory('pullDB17')
   var db18 = dbFactory('pullDB18')
@@ -193,7 +193,7 @@ test('api.push() error', function (t) {
         first = false
         return 'test1'
       } else {
-        return {}
+        throw new Error('ooops')
       }
     },
     foo: 'bar'

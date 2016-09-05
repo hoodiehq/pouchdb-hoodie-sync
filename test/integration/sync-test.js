@@ -315,7 +315,7 @@ test('api.sync(error)', function (t) {
         first = false
         return 'test1'
       } else {
-        return {}
+        throw new Error('ooops')
       }
     },
     foo: 'bar'
