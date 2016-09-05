@@ -1,6 +1,6 @@
 module.exports = waitFor
 
-var Promise = require('pouchdb/extras/promise')
+var Promise = require('lie')
 
 function waitFor (check, expected, timeout, interval) {
   return function () {
