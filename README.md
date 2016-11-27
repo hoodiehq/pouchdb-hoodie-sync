@@ -2,8 +2,6 @@
 
 > Hoodie-like sync API for PouchDB
 
-[![NPM](https://nodei.co/npm/pouchdb-hoodie-sync.png)](https://npmjs.org/package/pouchdb-hoodie-sync)
-
 [![Build Status](https://travis-ci.org/hoodiehq/pouchdb-hoodie-sync.svg?branch=master)](https://travis-ci.org/hoodiehq/pouchdb-hoodie-sync)
 [![Coverage Status](https://coveralls.io/repos/hoodiehq/pouchdb-hoodie-sync/badge.svg?branch=master)](https://coveralls.io/github/hoodiehq/pouchdb-hoodie-sync?branch=master)
 [![Dependency Status](https://david-dm.org/hoodiehq/pouchdb-hoodie-sync.svg)](https://david-dm.org/hoodiehq/pouchdb-hoodie-sync)
@@ -23,15 +21,7 @@ var api = db.hoodieSync({
   remote: 'http://example.com/mydb',
   // pass own EventEmitter instance if you want,
   // otherwise creates its own
-  emitter: emitter,
-  // optional ajax options for sync with remote db
-  // can also be a function. In that case the Function
-  // gets executed and result passed to all replications
-  ajax: {
-    headers: {
-      authorization: 'Bearer token123'
-    }
-  }
+  emitter: emitter
 })
 
 // starts / stops continuous replication
@@ -51,18 +41,24 @@ api.push([doc1, id2])
 api.sync()
 api.sync([doc1, id2])
 
-// change remoteName
-api.changeRemote(newRemote)
-api.changeRemote({
-  remote: 'http://example.com/mydb'
-  ajax: ajaxOptions
-})
-
 // events
 api.on('pull', function(doc) {})
 api.on('push', function(doc) {})
 api.on('connect', function() {})
 api.on('disconnect', function() {})
+```
+
+If you need to customise the request to the server, e.g. set custom header for
+authorisation, you can use `PouchDB.defaults{ajax}`:
+
+```js
+var MyPouch = PouchDB.defaults({
+  ajax: {
+    headers: {
+      authorization: 'Basic QWxhZGRpbjpPcGVuU2VzYW1l'
+    }
+  }
+})
 ```
 
 ### In the browser

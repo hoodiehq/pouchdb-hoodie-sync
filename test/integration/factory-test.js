@@ -12,7 +12,6 @@ test('db.hoodieSync(options) returns sync api', function (t) {
   t.is(typeof api.pull, 'function', 'returns api.pull')
   t.is(typeof api.push, 'function', 'returns api.push')
   t.is(typeof api.sync, 'function', 'returns api.sync')
-  t.is(typeof api.changeRemote, 'function', 'returns api.changeRemote')
   t.is(typeof api.on, 'function', 'returns api.on')
   t.is(typeof api.one, 'function', 'returns api.one')
   t.is(typeof api.off, 'function', 'returns api.off')
