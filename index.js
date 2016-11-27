@@ -13,7 +13,6 @@ function hoodieSync (options) {
     connect: require('./lib/connect').bind(null, state),
     disconnect: require('./lib/disconnect').bind(null, state),
     isConnected: require('./lib/is-connected').bind(null, state),
-    changeRemote: require('./lib/change-remote').bind(null, state),
     on: require('./lib/on').bind(null, state),
     off: require('./lib/off').bind(null, state),
     one: require('./lib/one').bind(null, state)
