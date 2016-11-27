@@ -16,7 +16,7 @@
     "istanbul-coveralls": "^1.0.3",
     "memdown": "^1.1.2",
     "pouchdb": "^6.0.4",
-    "semantic-release": "^4.3.4",
+    "semantic-release": "^6.3.2",
     "simple-mock": "^0.7.0",
     "standard": "^8.0.0",
     "tap-spec": "^4.1.0",
