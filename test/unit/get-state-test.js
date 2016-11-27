@@ -30,11 +30,3 @@ test('getState(db, {remote: "foo", emitter: emitter})', function (t) {
   t.is(state.emitter, 'myemitter', 'sets emitter')
   t.end()
 })
-
-test('getState(db, {remote: "foo", ajax: options})', function (t) {
-  var state = getState(null, {remote: 'foo', ajax: 'ajaxoptions'})
-
-  t.is(state.remote, 'foo', 'sets remote to "foo"')
-  t.is(state.ajaxOptions, 'ajaxoptions', 'sets ajax options')
-  t.end()
-})
