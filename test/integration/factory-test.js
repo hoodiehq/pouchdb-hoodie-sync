@@ -20,7 +20,7 @@ test('db.hoodieSync(options) returns sync api', function (t) {
   t.end()
 })
 
-test('db.hoodiesync(options)', function (t) {
+test('db.hoodieSync(options)', function (t) {
   var db = dbFactory()
   t.throws(db.hoodieSync, 'Throws if no options passed')
   t.throws(db.hoodieSync.bind(db, {}), 'Throws if no options.remote passed')
@@ -28,7 +28,7 @@ test('db.hoodiesync(options)', function (t) {
   t.end()
 })
 
-test('db.hoodiesync("http://localhost:5984")', function (t) {
+test('db.hoodieSync("http://localhost:5984")', function (t) {
   var db = dbFactory()
   t.doesNotThrow(db.hoodieSync.bind(db, 'http://localhost:5984'), 'takes string')
 
@@ -47,6 +47,42 @@ test('db.hoodieSync({remote, emitter})', function (t) {
     t.ok('emitter used from options')
   })
   emitter.emit('foo')
+
+  t.end()
+})
+
+test('db.hoodieSync(remote) – remote is PouchDB instance', function (t) {
+  var db1 = dbFactory()
+  var db2 = dbFactory()
+  t.doesNotThrow(db1.hoodieSync.bind(db1, db2), 'takes PouchDB instance')
+
+  t.end()
+})
+
+test('db.hoodieSync({remote}) – remote is PouchDB instance', function (t) {
+  var db1 = dbFactory()
+  var db2 = dbFactory()
+  t.doesNotThrow(db1.hoodieSync.bind(db1, {
+    remote: db2
+  }), 'takes PouchDB instance')
+
+  t.end()
+})
+
+test('db.hoodieSync(remote) – remote is promise', function (t) {
+  var db1 = dbFactory()
+  var db2 = dbFactory()
+  t.doesNotThrow(db1.hoodieSync.bind(db1, Promise.resolve(db2)), 'takes PouchDB instance')
+
+  t.end()
+})
+
+test('db.hoodieSync({remote}) – remote is promise', function (t) {
+  var db1 = dbFactory()
+  var db2 = dbFactory()
+  t.doesNotThrow(db1.hoodieSync.bind(db1, {
+    remote: Promise.resolve(db2)
+  }), 'takes PouchDB instance')
 
   t.end()
 })
