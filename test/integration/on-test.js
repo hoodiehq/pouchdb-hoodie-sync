@@ -243,8 +243,10 @@ test('api.on("connect") for multiple api.connect() calls', function (t) {
     numConnectEvents += 1
   })
 
-  api.connect()
-  api.connect()
+  Promise.resolve([
+    api.connect(),
+    api.connect()
+  ])
 
   .then(function () {
     t.is(numConnectEvents, 1)
