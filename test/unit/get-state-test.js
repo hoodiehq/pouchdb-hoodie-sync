@@ -64,3 +64,14 @@ test('getState(db, {remote: Promise.resolve("remote")})', function (t) {
     t.end()
   })
 })
+
+test.only('getState(db, {get remote () {})', function (t) {
+  var dbMock = {constructor: function () {}}
+  getState(dbMock, {
+    get remote () {
+      t.fail('should not execute getter')
+    }
+  })
+
+  t.end()
+})
