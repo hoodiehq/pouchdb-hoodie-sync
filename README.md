@@ -17,7 +17,11 @@ keep two databases in sync.
 // Initialisation
 var db = new PouchDB('dbname')
 var api = db.hoodieSync({
-  // local dbname or remote URL
+  // remote can be
+  // - local db name
+  // - remote URL
+  // - PouchDB instance
+  // - a promise that resolves to one of the 3 above
   remote: 'http://example.com/mydb',
   // pass own EventEmitter instance if you want,
   // otherwise creates its own
